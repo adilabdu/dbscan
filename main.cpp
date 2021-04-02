@@ -41,6 +41,8 @@ void readDataset(Point *point, const char* filename, int size, int dimension) {
 
 int main(int argc, char** argv) {
     
+    clock_t ttime = clock();
+    
     const char* filename = argv[1];
     int size = atoi(argv[2]);
     int dimension = atoi(argv[3]);
@@ -52,12 +54,16 @@ int main(int argc, char** argv) {
     Point *points = (Point *)calloc(size, sizeof(Point));
     readDataset(points, filename, size, dimension);
 
+    clock_t ftime = clock();
+
     for(int i = 0; i < size; i++) {
         for(int j = 0; j < dimension; j++) {
             cout << points[i].point[j] << ", ";
         }
         cout << endl;
     }
+
+    cout << "Execution Finished in " << (float)(ftime - ttime) / CLOCKS_PER_SEC << " seconds." << endl;
 
     return 0;
 }
