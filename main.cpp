@@ -6,13 +6,13 @@
 
 using namespace std;
 
-void readDataset(vector<Point>& points, const char* filename, int size, int dimension) {
+void readDataset(Point *point, const char* filename, int size, int dimension) {
 
     ifstream file(filename);
 
     if(file.is_open()) {
         string line;
-        Point *point = (Point *)calloc(size, sizeof(Point));
+        // Point *point = (Point *)calloc(size, sizeof(Point));
         
         int j = 0;
         while(getline(file, line)) {
@@ -28,11 +28,11 @@ void readDataset(vector<Point>& points, const char* filename, int size, int dime
                 i++;
             }
 
-            points.push_back(point[j]);
+            // points.push_back(point[j]);
             j++;
         }
 
-        delete point;
+        // delete point;
     }
     
     file.close();
@@ -48,7 +48,8 @@ int main(int argc, char** argv) {
     cout << "C++ implementation of DBSCAN";
     cout << endl;
 
-    vector<Point> points;
+    // vector<Point> points;
+    Point *points = (Point *)calloc(size, sizeof(Point));
     readDataset(points, filename, size, dimension);
 
     for(int i = 0; i < size; i++) {
