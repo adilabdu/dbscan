@@ -2,17 +2,18 @@
 #include <stdio.h>
 #include <fstream>
 #include <sstream>
+#include <ctime>
 #include "dbscan.h"
 
 using namespace std;
 
-void readDataset(Point *point, const char* filename, int size, int dimension) {
+void readDataset(vector<Point> &points, const char* filename, int size, int dimension) {
 
     ifstream file(filename);
 
     if(file.is_open()) {
         string line;
-        // Point *point = (Point *)calloc(size, sizeof(Point));
+        Point *point = (Point *)calloc(size, sizeof(Point));
         
         int j = 0;
         while(getline(file, line)) {
@@ -28,11 +29,11 @@ void readDataset(Point *point, const char* filename, int size, int dimension) {
                 i++;
             }
 
-            // points.push_back(point[j]);
+            points.push_back(point[j]);
             j++;
         }
 
-        // delete point;
+        delete point;
     }
     
     file.close();
@@ -41,6 +42,8 @@ void readDataset(Point *point, const char* filename, int size, int dimension) {
 
 int main(int argc, char** argv) {
     
+    clock_t start_time = clock();
+
     const char* filename = argv[1];
     int size = atoi(argv[2]);
     int dimension = atoi(argv[3]);
@@ -48,9 +51,10 @@ int main(int argc, char** argv) {
     cout << "C++ implementation of DBSCAN";
     cout << endl;
 
-    // vector<Point> points;
-    Point *points = (Point *)calloc(size, sizeof(Point));
+    vector<Point> points;
     readDataset(points, filename, size, dimension);
+
+    clock_t end_time = clock();
 
     for(int i = 0; i < size; i++) {
         for(int j = 0; j < dimension; j++) {
@@ -58,6 +62,10 @@ int main(int argc, char** argv) {
         }
         cout << endl;
     }
+
+    cout << endl << "File Read in " 
+            << (float)(end_time - start_time) / CLOCKS_PER_SEC
+            << " seconds." << endl; 
 
     return 0;
 }
