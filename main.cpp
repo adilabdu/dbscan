@@ -48,21 +48,10 @@ int main(int argc, char** argv) {
     int size = atoi(argv[2]);
     int dimension = atoi(argv[3]);
 
-    cout << "C++ implementation of DBSCAN";
-    cout << endl;
-
     vector<Point> points;
     readDataset(points, filename, size, dimension);
 
     clock_t end_time = clock();
-
-    for(int i = 0; i < size; i++) {
-        for(int j = 0; j < dimension; j++) {
-            cout << points[i].point[j] << ", ";
-        }
-        cout << endl;
-    }
-
     cout << endl << "File Read in " 
             << (float)(end_time - start_time) / CLOCKS_PER_SEC
             << " seconds." << endl; 
