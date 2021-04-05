@@ -2,40 +2,42 @@
 #define DBSCAN_H
 
 #include <vector>
+#include <cmath>
 
 #define UNCLASSIFIED -1
-#define CORE_POINT 1
-#define BORDER_POINT 2
 #define NOISE -2
-#define SUCCESS 0
-#define FAILURE -3
 
 using namespace std;
 
 typedef struct Point_ {
 
-    double *point;
+    float *point;
     int cluster_id;
     int cluster_label;
 
 } Point;
 
 class DBSCAN {
-    public:
-    DBSCAN(unsigned int min_points, float epsilon, vector<Point> points) {
+private:
+    unsigned int min_points;
+    float epsilon;
+    unsigned int size;
+    unsigned int dimension;
+    vector<Point> points;
+
+public: 
+    DBSCAN(unsigned int min_points, float epsilon, vector<Point> points, int dimension) {
         min_points = min_points;
         epsilon = epsilon;
         points = points;
         size = points.size();
+        dimension = dimension;
     }
 
-    ~DBSCAN(){}
-
     int run();
-
-    private:
-    int min_points;
-    int size;
+    bool expandCluster(Point point, int cluster_id);
+    vector<int> regionQuery(Point point);
+    inline float distanceMeasure(Point poi, Point target);
 
 };
 
