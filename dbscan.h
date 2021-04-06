@@ -14,30 +14,34 @@ typedef struct Point_ {
     float *point;
     int cluster_id;
     int cluster_label;
+    int index;
 
 } Point;
 
 class DBSCAN {
 private:
-    unsigned int min_points;
-    float epsilon;
+    unsigned int min_pts;
+    float eps;
     unsigned int size;
-    unsigned int dimension;
-    vector<Point> points;
+    unsigned int dim;
+    vector<Point> pts;
 
 public: 
     DBSCAN(unsigned int min_points, float epsilon, vector<Point> points, int dimension) {
-        min_points = min_points;
-        epsilon = epsilon;
-        points = points;
+        min_pts = min_points;
+        eps = epsilon;
+        pts = points;
         size = points.size();
-        dimension = dimension;
+        dim = dimension;
     }
 
     int run();
     bool expandCluster(Point point, int cluster_id);
     vector<int> regionQuery(Point point);
-    inline float distanceMeasure(Point poi, Point target);
+    float distanceMeasure(Point poi, Point target);
+
+    vector<Point> getPoints();
+    int getDimension();
 
 };
 

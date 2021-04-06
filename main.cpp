@@ -20,6 +20,7 @@ void readDataset(vector<Point> &points, const char* filename, int size, int dime
             stringstream ss(line.c_str());
             point[j].point = new float[dimension];
             point[j].cluster_id = UNCLASSIFIED;
+            point[j].index = j;
             
             int i = 0;
             while(ss.good()) {
@@ -53,19 +54,19 @@ int main(int argc, char** argv) {
     vector<Point> points;
     readDataset(points, filename, size, dimension);
 
-    clock_t end_time = clock();
-    cout << endl << "File Read in " 
-            << (float)(end_time - start_time) / CLOCKS_PER_SEC
-            << " seconds." << endl; 
-    cout << endl;
-
     DBSCAN dbscan(min_points, epsilon, points, dimension);
     dbscan.run();
 
     vector<Point>::iterator db_iter;
-    for(db_iter = points.begin(); db_iter != points.end(); db_iter++) {
-        cout << (*db_iter).cluster_id << "\t";
+    for(db_iter = dbscan.getPoints().begin(); db_iter != dbscan.getPoints().end(); db_iter++) {
+        cout << db_iter->cluster_id << "  ";
     }
+    cout << endl;
+
+    clock_t end_time = clock();
+    cout << endl << "File Read in " 
+            << (float)(end_time - start_time) / CLOCKS_PER_SEC
+            << " seconds." << endl; 
     cout << endl;
 
     return 0;
