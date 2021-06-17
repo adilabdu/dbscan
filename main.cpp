@@ -3,7 +3,9 @@
 #include <fstream>
 #include <sstream>
 #include <ctime>
-#include "dbscan.h"
+
+#include "include/nanoflann.hpp"
+#include "include/dbscan.h"
 
 using namespace std;
 
@@ -13,28 +15,26 @@ void readDataset(vector<Point> &points, const char* filename, int size, int dime
 
     if(file.is_open()) {
         string line;
-        Point *point = (Point *)calloc(size, sizeof(Point));
+        points.resize(size);
         
         int j = 0;
         while(getline(file, line)) {
             stringstream ss(line.c_str());
-            point[j].point = new float[dimension];
-            point[j].cluster_id = UNCLASSIFIED;
-            point[j].index = j;
+            points[j].point.resize(dimension);
+            points[j].cluster_id = UNCLASSIFIED;
+            points[j].index = j;
             
             int i = 0;
             while(ss.good()) {
                 string substring;
                 getline(ss, substring, ',');
-                point[j].point[i] = stod(substring);
+                points[j].point[i] = stof(substring);
                 i++;
             }
 
-            points.push_back(point[j]);
             j++;
         }
 
-        delete point;
     }
     
     file.close();

@@ -11,7 +11,7 @@ using namespace std;
 
 typedef struct Point_ {
 
-    float *point;
+    vector<float> point;
     int cluster_id;
     int cluster_label;
     int index;

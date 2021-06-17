@@ -1,4 +1,4 @@
-#include "dbscan.h"
+#include "include/dbscan.h"
 
 int DBSCAN::run() {
 
