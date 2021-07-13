@@ -5,7 +5,9 @@
 #include <cmath>
 
 #define UNCLASSIFIED -1
-#define NOISE -2
+#define NOISE 0
+#define BORDER 1
+#define CORE 2
 
 using namespace std;
 
@@ -15,6 +17,7 @@ typedef struct Point_ {
     int cluster_id;
     int cluster_label;
     int index;
+    float closest_core;
 
 } Point;
 
@@ -35,12 +38,16 @@ public:
         dim = dimension;
     }
 
-    int run();
+    vector<Point> run();
+    int revised();
+    int proposed();
     bool expandCluster(Point point, int cluster_id);
+    bool proposedExpand(Point point, int cluster_id);
     vector<int> regionQuery(Point point);
     float distanceMeasure(Point poi, Point target);
 
     vector<Point> getPoints();
+    int getClusterID(int index);
     int getDimension();
 
 };
